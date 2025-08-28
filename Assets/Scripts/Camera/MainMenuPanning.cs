@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenuPanning : MonoBehaviour
@@ -8,42 +9,20 @@ public class MainMenuPanning : MonoBehaviour
 
     private Camera cam;
 
+    // Camera starting positions
+    public List<Vector3> startingPositions;
+    // Camera target positions to pan to
+    public List<Vector3> targetPositions;
+    // Camera Rotation look at positions
+    public List<Vector3> lookAtPositions;
+    // Camera Rotation target look at positions
+    public List<Vector3> targetLookAt;
+
     private void Awake()
     {
         cam = GetComponent<Camera>();
     }
 
-    // Camera starting positions
-    public Vector3[] startingPositions =
-    {
-        new Vector3(4f, 5f, 0.65f),
-        new Vector3(-1.59f, 3.28f, -6.35f),
-        new Vector3(4.226f, 1.94f, -5.989f),
-    };
-
-    // Camera target positions to pan to
-    public Vector3[] targetPositions =
-    {
-        new Vector3(4f, 5f, 0.65f),
-        new Vector3(-1.59f, 3.28f, 6.76f),
-        new Vector3(2.734f, 1.94f, -4.422f),
-    };
-
-    // Camera Rotation look at positions
-    public Vector3[] lookAtPositions =
-    {
-        new Vector3(24.74f, -223.6f, 0f),
-        new Vector3(16.71f, -90.0f, 0.0f),
-        new Vector3(0, -223.6f, 0f),
-    };
-
-    // Camera Rotation target look at positions
-    public Vector3[] targetLookAt =
-    {
-        new Vector3(24.74f, 313.9f, 0),
-        new Vector3(16.71f, -90.0f, 0.0f),
-        new Vector3(0, -223.6f, 0),
-    };
 
     void Start()
     {
@@ -69,7 +48,7 @@ public class MainMenuPanning : MonoBehaviour
         }
         else
         {
-            currentIndex = (currentIndex + 1) % targetPositions.Length; // Reset to 0 after reaching the end
+            currentIndex = (currentIndex + 1) % targetPositions.Count; // Reset to 0 after reaching the end
             // Set the camera to the new starting position and look at the new target
             cam.transform.position = startingPositions[currentIndex];
             cam.transform.rotation = Quaternion.Euler(lookAtPositions[currentIndex]);

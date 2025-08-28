@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Episode1
+  m_EditorClassIdentifier: Assembly-CSharp::Episode
+  intro:
+    introSong: {fileID: 0}
+    introVideo: {fileID: 0}
+    introVoiceOver: {fileID: 0}
+    audienceCheerAndClap: {fileID: 0}
+    cameraPanTargets:
+    - startPosition: {x: 2.045, y: 5.422, z: 0.382}
+      endPosition: {x: 2.045, y: 5.422, z: 0.382}
+      startRotation: {x: 18.000006, y: 238.44, z: -0.0000008977107}
+      endRotation: {x: 18.000006, y: 314.29996, z: 0.00000044885536}
+    - startPosition: {x: -0.882, y: 5.074, z: -6.76}
+      endPosition: {x: -0.882, y: 5.074, z: 6.896}
+      startRotation: {x: 22.799997, y: 270, z: 0}
+      endRotation: {x: 22.799997, y: 270, z: 0}
+  dialogueSteps:
+  - dialogueText: 
+    voiceClip: {fileID: 0}
+    cameraTarget: {fileID: 0}
+    hostAnimationState: 
+    audienceAnimationState: 
+    guestAnimationState: 
+    showGuest: 0
+    raiseCurtain: 0
