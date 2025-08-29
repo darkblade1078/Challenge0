@@ -11,15 +11,6 @@ public class DialogueStep {
     public string audienceAnimationState;
     public string guestAnimationState;
     public bool showGuest; // Trigger guest appearance
-    public bool raiseCurtain; // Trigger curtain animation
-}
-
-[System.Serializable]
-public class CameraPanArea {
-    public Vector3 startPosition;
-    public Vector3 endPosition;
-    public Vector3 startRotation;
-    public Vector3 endRotation;
 }
 
 [System.Serializable]
@@ -28,7 +19,6 @@ public class EpisodeIntro {
     public VideoClip introVideo;
     public AudioClip introVoiceOver;
     public AudioClip audienceCheerAndClap;
-    public List<CameraPanArea> cameraPanTargets; // At least 3 areas
 }
 
 [CreateAssetMenu(fileName = "Episode", menuName = "TalkShow/Episode", order = 1)]

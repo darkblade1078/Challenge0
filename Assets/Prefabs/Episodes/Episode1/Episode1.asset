@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Episode1
   m_EditorClassIdentifier: Assembly-CSharp::Episode
   intro:
-    introSong: {fileID: 0}
-    introVideo: {fileID: 0}
-    introVoiceOver: {fileID: 0}
-    audienceCheerAndClap: {fileID: 0}
+    introSong: {fileID: 8300000, guid: ab84ef978010b094baff4e23c180bbd2, type: 3}
+    introVideo: {fileID: 32900000, guid: 3f4786195e40641409d43f56e22bddf6, type: 3}
+    introVoiceOver: {fileID: 8300000, guid: ab84ef978010b094baff4e23c180bbd2, type: 3}
+    audienceCheerAndClap: {fileID: 8300000, guid: ab84ef978010b094baff4e23c180bbd2, type: 3}
     cameraPanTargets:
     - startPosition: {x: 2.045, y: 5.422, z: 0.382}
       endPosition: {x: 2.045, y: 5.422, z: 0.382}
-      startRotation: {x: 18.000006, y: 238.44, z: -0.0000008977107}
-      endRotation: {x: 18.000006, y: 314.29996, z: 0.00000044885536}
-    - startPosition: {x: -0.882, y: 5.074, z: -6.76}
-      endPosition: {x: -0.882, y: 5.074, z: 6.896}
-      startRotation: {x: 22.799997, y: 270, z: 0}
-      endRotation: {x: 22.799997, y: 270, z: 0}
+      startRotation: {x: 18.000006, y: 238.44, z: 0}
+      endRotation: {x: 18.000006, y: 314.29996, z: 0}
+    - startPosition: {x: -0.43, y: 2.92, z: -6.47}
+      endPosition: {x: -0.43, y: 2.92, z: 6.69}
+      startRotation: {x: 0, y: 270, z: 0}
+      endRotation: {x: 0, y: 270, z: 0}
   dialogueSteps:
   - dialogueText: 
     voiceClip: {fileID: 0}
@@ -34,4 +34,3 @@ MonoBehaviour:
     audienceAnimationState: 
     guestAnimationState: 
     showGuest: 0
-    raiseCurtain: 0
