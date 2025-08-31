@@ -52,6 +52,21 @@ public class EpisodeManager : MonoBehaviour
 
         //TODO: get everyone to clap and cheer
 
+        // Set the guest to the starting position and rotation
+        if (dialogueManager != null && dialogueManager.spawnedGuest != null && dialogueManager.guestSpawnLocation != null)
+        {
+            if (dialogueManager.spawnedGuest != null)
+            {
+                dialogueManager.spawnedGuest.transform.position = dialogueManager.guestSpawnLocation;
+                dialogueManager.spawnedGuest.transform.rotation = Quaternion.Euler(dialogueManager.guestSpawnRotation);
+            }
+            else
+            {
+                GameObject guest = Instantiate(dialogueManager.spawnedGuest, dialogueManager.guestSpawnLocation, Quaternion.Euler(dialogueManager.guestSpawnRotation));
+                dialogueManager.guestAnimator = guest.GetComponent<Animator>();
+            }
+        }
+
         // Play intro music
         MusicManager musicManager = new MusicManager();
         Coroutine musicCoroutine = StartCoroutine(musicManager.PlaySong(musicSource, introMusic));

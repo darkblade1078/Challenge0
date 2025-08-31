@@ -37,7 +37,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -9017100408518673658}
-    m_Position: {x: 501, y: 244, z: 0}
+    m_Position: {x: 500, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7668672914044166869}
     m_Position: {x: 541, y: 140, z: 0}
@@ -80,7 +80,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sitting
+  m_Name: Sit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
