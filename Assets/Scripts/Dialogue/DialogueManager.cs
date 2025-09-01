@@ -55,11 +55,7 @@ public class DialogueManager : MonoBehaviour
     public DialogueStep[] dialogueSteps;
 
     [Header("Audio")]
-    public AudioSource HostAudioSource;
-    public AudioSource GuestAudioSource;
-    public AudioSource AudienceAudioSource;
-
-    public AudioClip[] VoiceClips;
+    public AudioClip endMusicClip;
 
     [Header("Animators")]
     public Animator hostAnimator;
@@ -74,11 +70,15 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
+    public Vector3 camEndLocation;
+    public Vector3 camEndRotation;
 
     [Header("Guest Model")]
     public GameObject spawnedGuest;
     public Vector3 guestSpawnLocation;
     public Vector3 guestSpawnRotation;
+    public Vector3 guestEndLocation;
+    public Vector3 guestEndRotation;
 
     public IEnumerator StartDialogue()
     {
@@ -92,7 +92,7 @@ public class DialogueManager : MonoBehaviour
             // Play guest animation if specified
             if (guestAnimator != null && !string.IsNullOrEmpty(dialogueSteps[dialogueIndex].guestAnimation))
                 guestAnimator.Play(dialogueSteps[dialogueIndex].guestAnimation);
-                
+
             // Play audience animation if specified
             if (audienceAnimators != null && !string.IsNullOrEmpty(dialogueSteps[dialogueIndex].audienceAnimation))
                 foreach (var anim in audienceAnimators)
@@ -114,7 +114,7 @@ public class DialogueManager : MonoBehaviour
             if (speakerText != null)
                 speakerText.text = dialogueSteps[dialogueIndex].speaker;
 
-            if(dialogueSteps[dialogueIndex].showDialogueBox)
+            if (dialogueSteps[dialogueIndex].showDialogueBox)
                 dialogueText.transform.parent.gameObject.SetActive(true);
             else
                 dialogueText.transform.parent.gameObject.SetActive(false);
@@ -149,6 +149,7 @@ public class DialogueManager : MonoBehaviour
                 if (musicSource == null)
                     musicSource = gameObject.AddComponent<AudioSource>();
                 musicSource.clip = dialogueSteps[dialogueIndex].musicClip;
+                musicSource.volume = 0.6f; // Lower volume by 40%
                 musicSource.Play();
                 musicWaitTime = dialogueSteps[dialogueIndex].musicClip.length;
             }
@@ -184,11 +185,11 @@ public class DialogueManager : MonoBehaviour
                     }
                     yield return null;
                 }
-            
+
                 dialogueIndex++; // Skip to next dialogue step after spawning
                 continue; // Skip the rest of this loop to avoid double increment
             }
-            
+
             // Wait for music to finish
             float musicTimer = 0f;
             while (musicTimer < musicWaitTime)
@@ -208,7 +209,7 @@ public class DialogueManager : MonoBehaviour
                 audioSource.Play();
                 waitTime = dialogueSteps[dialogueIndex].voiceClip.length;
             }
-            
+
             // Wait for voice clip to finish or 2 seconds if none
             float timer = 0f;
             while (timer < waitTime)
@@ -233,7 +234,7 @@ public class DialogueManager : MonoBehaviour
                 // Set speaker name for response UI
                 if (speakerText != null && !string.IsNullOrEmpty(dialogueSteps[dialogueIndex].response.speaker))
                     speakerText.text = dialogueSteps[dialogueIndex].response.speaker;
-                    
+
                 // Activate response UI
                 responseUI.SetActive(true);
 
@@ -261,14 +262,14 @@ public class DialogueManager : MonoBehaviour
                         buttons[i].gameObject.SetActive(false);
                     }
                 }
-                
+
                 // Wait for user to pick a response
                 while (chosenIndex == -1)
                     yield return null;
-    
-                if(responseUI != null)
+
+                if (responseUI != null)
                     responseUI.SetActive(false);
-                    
+
                 // Display chosen response as dialogue
                 if (dialogueText != null)
                 {
@@ -380,5 +381,64 @@ public class DialogueManager : MonoBehaviour
 
             dialogueIndex++;
         }
+
+        if (cam != null)
+        {
+            cam.transform.position = camEndLocation;
+            cam.transform.rotation = Quaternion.Euler(camEndRotation);
+        }
+
+        //disable dialogue box at end
+        if (dialogueText != null)
+            dialogueText.transform.parent.gameObject.SetActive(false);
+
+        // After all dialogue steps are finished, trigger end sequence
+        // Set guest to ending position and rotation
+        if (spawnedGuest != null)
+        {
+            spawnedGuest.transform.position = guestEndLocation;
+            spawnedGuest.transform.rotation = Quaternion.Euler(guestEndRotation);
+        }
+
+        // Play end music
+        float endMusicWaitTime = 0f;
+        if (endMusicClip != null)
+        {
+            AudioSource musicSource = GetComponent<AudioSource>();
+            if (musicSource == null)
+                musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.clip = endMusicClip;
+            musicSource.volume = 0.6f; // Lower volume by 40%
+            musicSource.Play();
+            endMusicWaitTime = endMusicClip.length;
+        }
+
+        // Host cheer
+        if (hostAnimator != null)
+            hostAnimator.Play("Cheer");
+
+        // Audience cheer
+        if (audienceAnimators != null)
+            foreach (var anim in audienceAnimators)
+                if (anim != null)
+                    anim.Play("Cheer");
+
+        // Guest dance
+        if (spawnedGuest != null)
+        {
+            Animator guestAnim = spawnedGuest.GetComponent<Animator>();
+            if (guestAnim != null)
+                guestAnim.Play("Dance");
+        }
+
+        // Wait for end music to finish
+        float endMusicTimer = 0f;
+        while (endMusicTimer < endMusicWaitTime)
+        {
+            endMusicTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }
